@@ -13,12 +13,15 @@ class Dictionary(models.Model):
         return f'[EN] {self.en_word}: [ES] {self.es_word};'
 
     def get_pair(self, lang):
-        if lang == 'en':
-            return (getattr(self, 'en_word'), getattr(self, 'es_word'))
-        else:
-            return (getattr(self, 'es_word'), getattr(self, 'en_word'))
+        """
+        Returns a tuple with word and translation pair `(word, translation)`.
+        """
+        return (self.en_word, self.es_word) if lang == 'en' else (self.es_word, self.en_word)
 
     def get_payload(self, lang):
+        """
+        Returns the translation payload in Python type.
+        """
         return {
             'id': self.id,
             'translation': self.get_pair(lang)[1],

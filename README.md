@@ -6,6 +6,7 @@ The stack is based on Python3 (and Django) and the database used is Sqlite for s
 
 My assumptions:
  * A word may have more than one translation;
+ * The amount of possible translations a word can have is only a few and does not need paginated listing;
 
 ----
 

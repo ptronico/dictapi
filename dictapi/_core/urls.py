@@ -1,13 +1,15 @@
-from django.urls import path
+from django.urls import path, register_converter
 
 from dicts import views as dict_views
+from dicts.utils import LangPrefixConverter
 
 
-prefix = 'api/v1'
+api_prefix = 'api/v1'
+register_converter(LangPrefixConverter, 'lang')
 
 
 urlpatterns = [
-    path(f'{prefix}/dictionary/', dict_views.dictionary_add),
-    path(f'{prefix}/dictionary/<int:pk>/', dict_views.dictionary_delete),
-    path(f'{prefix}/dictionary/<slug:lang>/<slug:word>/', dict_views.dictionary_translate),
+    path(f'{api_prefix}/dictionary', dict_views.dictionary_add),
+    path(f'{api_prefix}/dictionary/<int:pk>', dict_views.dictionary_delete),
+    path(f'{api_prefix}/dictionary/<lang:lang>/<slug:word>', dict_views.dictionary_translate),
 ]

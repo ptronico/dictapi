@@ -16,7 +16,7 @@ def get_dictionary_entries(lang, word):
     """
     Get all `word` for `lang`.
     """
-    return list(Dictionary.objects.filter(**{f'{lang}_word': word}))
+    return list(Dictionary.objects.filter(**{f'{lang}_word__iexact': word}))
 
 
 def add_dictionary(en_word, es_word):
@@ -37,3 +37,16 @@ def delete_dictionary(pk):
     Delete a dictionary entry by its primary key.
     """
     Dictionary.objects.filter(id=pk).delete()
+
+
+class LangPrefixConverter:
+    """
+    URL PrefixConverter for match `en|es` `lang` arguments.
+    """
+    regex = 'EN|En|eN|en|ES|Es|eS|es'
+
+    def to_url(self, value):
+        return f'{value}'
+
+    def to_python(self, value):
+        return value.lower()

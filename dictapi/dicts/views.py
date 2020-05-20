@@ -13,17 +13,17 @@ def dictionary_translate(request, lang, word):
     This view handles translations requests. `word` is the word
     user wants to get translated and `lang` is `word` language.
     """
-    entries = get_dictionary_entries(lang=lang, word=word)
+    entries = get_dictionary_entries(lang=lang, word=clean_word(word))
     data = {
         'meta': {
             'lang': lang,
             'word': word,
-            'entries_found': len(entries),
+            'entries': len(entries),
         },
         'translations': [e.get_payload(lang) for e in entries],
     }
     response = JsonResponse(data)
-    response.status_code = 200
+    response.status_code = 200 if entries else 404
     return response
 
 
@@ -45,14 +45,17 @@ def dictionary_add(request):
         return response
 
     add_dictionary(en_word=en_word, es_word=es_word)
-    request = JsonResponse({'status': 'Created'})
-    request.status_code = 201
+    request = JsonResponse({})
+    request.status_code = 204
     return request
 
 
 @csrf_exempt
 @require_http_methods(['DELETE'])
 def dictionary_delete(request, pk):
+    """
+    This view handle the delete task for a dictionary entry.
+    """
     delete_dictionary(pk)
     response = JsonResponse({})
     response.status_code = 204
