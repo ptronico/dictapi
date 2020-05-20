@@ -12,7 +12,7 @@ My assumptions:
 ## Installing and running the application
 
 
-```sh
+```console
 $ pip install -r requirements.txt
 $ python dictapi/manage.py migrate
 $ python dictapi/manage.py runserver
@@ -28,7 +28,7 @@ The application should get running at `http://127.0.0.1:8000/`.
 
 For adding new words to dictionary, send a `POST` request with a JSON payload with `en_word` and `es_word` fields as shown in the following example:
 
-```sh
+```console
 $ curl -X POST http://127.0.0.1:8000/api/v1/dictionary/ \
   -data '{"en_word": "car", "es_word": "auto"}'
   {
@@ -44,7 +44,7 @@ $ curl -X POST http://127.0.0.1:8000/api/v1/dictionary/ \
 
 For getting a translation we should do a `GET` request passing a `word` and `language` as parameters in URI. For `language` we have two options `en` for English and `es` for Spanish.
 
-```sh
+```console
 $ curl http://127.0.0.1:8000/api/v1/dictionary/en/car/
   {
     "meta": {
@@ -73,6 +73,6 @@ $ curl http://127.0.0.1:8000/api/v1/dictionary/en/car/
 
 To delete a dictionary entry just send a `DELETE` request with `id` of the ítem that should be deleted, as the example bellow shows:
 
-```sh
+```console
 $ curl -X DELETE http://127.0.0.1:8000/api/v1/dictionary/15/
 ```
