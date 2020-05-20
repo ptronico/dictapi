@@ -4,40 +4,50 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
-from .utils import add_dictionary, get_dictionary, delete_dictionary
+from .utils import clean_word, add_dictionary, get_dictionary_entries, delete_dictionary
+
+
+@require_http_methods(['GET'])
+def dictionary_translate(request, lang, word):
+    """
+    This view handles translations requests. `word` is the word
+    user wants to get translated and `lang` is `word` language.
+    """
+    entries = get_dictionary_entries(lang=lang, word=word)
+    data = {
+        'meta': {
+            'lang': lang,
+            'word': word,
+            'entries_found': len(entries),
+        },
+        'translations': [e.get_payload(lang) for e in entries],
+    }
+    response = JsonResponse(data)
+    response.status_code = 200
+    return response
 
 
 @csrf_exempt
-@require_http_methods(['GET', 'POST'])
-def dictionary(request):
+@require_http_methods(['POST'])
+def dictionary_add(request):
+    """
+    This view handles JSON payload sent by the user and adds
+    a new translation record into database. The payload should
+    contains `en_word` and `es_word` fields.
+    """
     try:
         payload = json.loads(request.body)
+        en_word = clean_word(payload.get('en_word', ''))
+        es_word = clean_word(payload.get('es_word', ''))
     except json.JSONDecodeError:
         response = JsonResponse({'message': 'Bad Request'})
         response.status_code = 400
         return response
 
-    if request.method == 'GET':
-        # Getting a directionary entry
-        d = get_dictionary(en_word=payload.get('en_word', ''), es_word=payload.get('es_word', ''))
-        if d:
-            data = {
-                'id': d.id,
-                'en_word': d.en_word,
-                'es_word': d.es_word,
-            }
-            return JsonResponse(data)
-
-        response = JsonResponse({'message': 'Not Found'})
-        response.status_code = 404
-        return response
-
-    if request.method == 'POST':
-        # Creating a new dictionary entry
-        add_dictionary(en_word=payload.get('en_word', ''), es_word=payload.get('es_word', ''))
-        request = JsonResponse({'status': 'Created'})
-        request.status_code = 201
-        return request
+    add_dictionary(en_word=en_word, es_word=es_word)
+    request = JsonResponse({'status': 'Created'})
+    request.status_code = 201
+    return request
 
 
 @csrf_exempt
