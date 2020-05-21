@@ -1,8 +1,8 @@
 import string
 
-from django.db import IntegrityError
+from django.db import transaction, IntegrityError
 
-from .models import Dictionary
+from .models import EnglishWord, SpanishWord, EnglishSpanishTranslation
 
 
 def clean_word(word):
@@ -16,9 +16,10 @@ def get_dictionary_entries(lang, word):
     """
     Get all entries with `word` in `lang`.
     """
-    return list(Dictionary.objects.filter(**{f'{lang}_word__iexact': word}))
+    return list(EnglishSpanishTranslation.objects.select_related().filter(**{f'{lang}_word__word__iexact': word}))
 
 
+@transaction.atomic
 def add_dictionary(en_word, es_word):
     """
     Add a pair of `en_word` and `es_word`. The `Dictionary` model
@@ -26,8 +27,10 @@ def add_dictionary(en_word, es_word):
     catching silently `IntegrityError` when tring to add a already
     existent pair.
     """
+    english_word = EnglishWord.objects.get_or_create(word=en_word)[0]
+    spanish_word = SpanishWord.objects.get_or_create(word=es_word)[0]
     try:
-        Dictionary.objects.create(en_word=en_word, es_word=es_word)
+        EnglishSpanishTranslation.objects.create(en_word=english_word, es_word=spanish_word)
     except IntegrityError:
         pass
 
@@ -36,7 +39,7 @@ def delete_dictionary(pk):
     """
     Delete a dictionary entry by its primary key.
     """
-    return Dictionary.objects.filter(id=pk).delete()[0]
+    return EnglishSpanishTranslation.objects.filter(id=pk).delete()[0]
 
 
 class LangPrefixConverter:

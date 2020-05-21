@@ -51,16 +51,12 @@ $ curl http://127.0.0.1:8000/api/v1/dictionary/en/car
     "meta": {
       "lang": "en",
       "word": "car",
-      "entries": 2
+      "entries": 1
     },
     "translations": [
       {
-        "id": 6,
+        "id": 1,
         "translation": "auto"
-      },
-      {
-        "id": 12,
-        "translation": "automóvil"
       }
     ]
   }
