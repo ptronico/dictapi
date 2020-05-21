@@ -14,7 +14,7 @@ def clean_word(word):
 
 def get_dictionary_entries(lang, word):
     """
-    Get all `word` for `lang`.
+    Get all entries with `word` in `lang`.
     """
     return list(Dictionary.objects.filter(**{f'{lang}_word__iexact': word}))
 

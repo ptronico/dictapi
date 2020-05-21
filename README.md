@@ -15,6 +15,7 @@ My assumptions:
 
 ## Installing and running the application
 
+Clone the repository then run the following commands:
 
 ```console
 $ pip install -r requirements.txt
@@ -62,7 +63,7 @@ $ curl http://127.0.0.1:8000/api/v1/dictionary/en/car
       },
       {
         "id": 12,
-        "translation": "automobil"
+        "translation": "automóvil"
       }
     ]
   }
@@ -74,7 +75,7 @@ $ curl http://127.0.0.1:8000/api/v1/dictionary/en/car
 
 `DELETE /api/v1/dictionary/:id`
 
-To delete a dictionary entry just send a `DELETE` request with `id` of the ítem that should be deleted, as the example bellow shows:
+To delete a dictionary entry just send a `DELETE` request with `id` of the ítem that should be deleted, as shown in the example below:
 
 ```console
 $ curl -X DELETE http://127.0.0.1:8000/api/v1/dictionary/1
