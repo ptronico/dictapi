@@ -35,9 +35,6 @@ For adding new words to dictionary, send a `POST` request with a JSON payload co
 
 ```console
 $ curl -X POST http://127.0.0.1:8000/api/v1/dictionary -d '{"en_word": "car", "es_word": "auto"}'
-  {
-    "status": "Created"
-  }
 ```
 
 ----
