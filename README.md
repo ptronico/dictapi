@@ -1,6 +1,6 @@
 # dictapi
 
-This application implements a very simple English-Spanish dictionary over a HTTP REST JSON API.
+This application implements a very simple English-Spanish dictionary over an HTTP REST JSON API.
 
 The stack is based on Python3 (and Django) and the database used is Sqlite for simplicity.
 
@@ -9,7 +9,7 @@ Author: Pedro Vasconcelos (ptronico@gmail.com)
 My assumptions:
  * A word may have more than one translation;
  * The amount of possible translations a word can have is only a few and does not need paginated listing;
- * I decided do not return `201 Created` after creating a new translation because this resource has no URI in this tiny application;
+ * I decided to not return `201 Created` after creating a new translation because this resource has no URI in this tiny application;
 
 ----
 
@@ -51,7 +51,7 @@ $ curl http://127.0.0.1:8000/api/v1/dictionary/en/car
     "meta": {
       "lang": "en",
       "word": "car",
-      "entries_found": 3
+      "entries": 2
     },
     "translations": [
       {
