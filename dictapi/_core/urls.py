@@ -11,5 +11,5 @@ register_converter(LangPrefixConverter, 'lang')
 urlpatterns = [
     path(f'{api_prefix}/dictionary', views.dictionary_add),
     path(f'{api_prefix}/dictionary/<int:pk>', views.dictionary_delete),
-    path(f'{api_prefix}/dictionary/<lang:lang>/<slug:word>', views.dictionary_translate),
+    path(f'{api_prefix}/dictionary/<lang:lang>/<str:word>', views.dictionary_translate),
 ]
