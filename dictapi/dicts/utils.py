@@ -36,7 +36,7 @@ def delete_dictionary(pk):
     """
     Delete a dictionary entry by its primary key.
     """
-    Dictionary.objects.filter(id=pk).delete()
+    return Dictionary.objects.filter(id=pk).delete()[0]
 
 
 class LangPrefixConverter:
