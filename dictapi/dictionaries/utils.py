@@ -22,10 +22,10 @@ def get_dictionary_entries(lang, word):
 @transaction.atomic
 def add_dictionary(en_word, es_word):
     """
-    Add a pair of `en_word` and `es_word`. The `Dictionary` model
-    enforces unique pairs in the database. For this reason we are
-    catching silently `IntegrityError` when tring to add a already
-    existent pair.
+    Add a pair of `en_word` and `es_word`. The `EnglishSpanishTranslation`
+    model enforces unique pairs in the database. For this reason we are
+    catching silently `IntegrityError` when tring to add a already existent
+    pair.
     """
     english_word = EnglishWord.objects.get_or_create(word=en_word)[0]
     spanish_word = SpanishWord.objects.get_or_create(word=es_word)[0]
