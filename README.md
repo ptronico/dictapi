@@ -9,7 +9,7 @@ Author: Pedro Vasconcelos (ptronico@gmail.com)
 My assumptions:
  * A word may have more than one translation;
  * The amount of possible translations a word can have is only a few and does not need paginated listing;
- * I decided to not return `201 Created` after creating a new translation because this resource has no URI in this tiny application;
+ * I decided to not return `201 Created` after creating a new translation because this resource has no URI that accepts `GET` requests in this tiny application;
 
 ----
 

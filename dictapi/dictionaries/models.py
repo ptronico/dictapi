@@ -33,13 +33,13 @@ class EnglishSpanishTranslation(models.Model):
 
     def get_pair(self, lang):
         """
-        Returns a tuple with word and translation pair `(word, translation)`.
+        Returns a tuple `(word, translation)`. `word` in in `lang`.
         """
         return (self.en_word.word, self.es_word.word) if lang == 'en' else (self.es_word.word, self.en_word.word)
 
     def get_payload(self, lang):
         """
-        Returns the translation payload in Python type.
+        Returns the translation payload in Python dict type.
         """
         return {
             'id': self.id,
