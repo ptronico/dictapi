@@ -24,7 +24,7 @@ def add_dictionary(en_word, es_word):
     """
     Add a pair of `en_word` and `es_word`. The `EnglishSpanishTranslation`
     model enforces unique pairs in the database. For this reason we are
-    catching silently `IntegrityError` when tring to add a already existent
+    catching silently `IntegrityError` when tring to add an already existent
     pair.
     """
     english_word = EnglishWord.objects.get_or_create(word=en_word)[0]
