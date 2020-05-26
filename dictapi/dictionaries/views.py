@@ -45,9 +45,9 @@ def dictionary_add(request):
         return response
 
     add_dictionary(en_word=en_word, es_word=es_word)
-    request = JsonResponse({})
-    request.status_code = 204
-    return request
+    response = JsonResponse({})
+    response.status_code = 204
+    return response
 
 
 @csrf_exempt
